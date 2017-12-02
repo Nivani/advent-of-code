@@ -25,4 +25,15 @@ class CalculateChecksumTest {
 
         asserter.assertEquals("Checksum from example should be 90", 90, checksum)
     }
+
+    @Test
+    fun testExamplePart2() {
+        val input = "5 9 2 8\n" +
+                "9 4 7 3\n" +
+                "3 8 6 5"
+
+        val checksum = calculateChecksumPart2(input)
+
+        asserter.assertEquals("Checksum from example should be 9", 9, checksum)
+    }
 }
