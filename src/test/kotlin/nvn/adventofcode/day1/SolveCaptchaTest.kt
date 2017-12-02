@@ -17,7 +17,7 @@ class SolveCaptchaTest {
             val result = solveCaptcha(it.first)
             asserter.assertEquals(
                     "Expected solveCaptcha(${it.first}) to be equal ${it.second}, but it was $result",
-                    result, it.second
+                    it.second, result
             )
         }
     }
@@ -36,7 +36,7 @@ class SolveCaptchaTest {
             val result = solveCaptchaPart2(it.first)
             asserter.assertEquals(
                     "Expected solveCaptchaPart2(${it.first}) to be equal ${it.second}, but it was $result",
-                    result, it.second
+                    it.second, result
             )
         }
     }
