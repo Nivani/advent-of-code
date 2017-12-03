@@ -1,25 +1,30 @@
 package nvn.adventofcode.day2
 
-fun calculateChecksum(input: String, calculateRowResult: (Array<Int>) -> Int = { minMaxDifferenceRowResult(it) }): Int  =
-        input
-                .lines()
-                .map({ line ->
-                    val row = line
-                            .trim()
-                            .split("\\s+".toRegex())
-                            .map({ it.toInt() })
-                    calculateRowResult(row.toTypedArray())
-                })
+fun calculateChecksum(input: String): Int =
+        parseRows(input)
+                .map({ row -> minMaxDifferenceRowResult(row) })
                 .sum()
 
-fun calculateChecksumPart2(input: String): Int  = calculateChecksum(input, { evenlyDivisibleValuesRowResult(it) })
+fun calculateChecksumPart2(input: String): Int =
+        parseRows(input)
+                .map({ row -> evenlyDivisibleValuesRowResult(row) })
+                .sum()
 
-fun minMaxDifferenceRowResult(row: Array<Int>): Int =
+private fun parseRows(input: String): List<List<Int>> = input
+        .lines()
+        .map({ line ->
+            line
+                    .trim()
+                    .split("\\s+".toRegex())
+                    .map({ it.toInt() })
+        })
+
+private fun minMaxDifferenceRowResult(row: Iterable<Int>): Int =
         row
                 .fold(MinMax(), { minMax, item -> minMax.handleValue(item) })
                 .difference
 
-fun evenlyDivisibleValuesRowResult(row: Array<Int>): Int {
+private fun evenlyDivisibleValuesRowResult(row: Iterable<Int>): Int {
     row.forEachIndexed { i, a ->
         row.forEachIndexed { j, b ->
             if (i != j && a % b == 0)
