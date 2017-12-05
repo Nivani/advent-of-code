@@ -5,4 +5,10 @@ fun main(args : Array<String>) {
     println("------")
 
     println(manhattanDistanceToStep(347991))
+
+    println()
+    println("Part 2")
+    println("------")
+
+    println(firstValueLargerThanSumOfAdjecentSquares(347991))
 }

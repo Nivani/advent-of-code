@@ -2,6 +2,10 @@ package nvn.adventofcode.day3
 
 class Coord(val x: Int, val y: Int) {
 
+    operator fun plus(other: Coord): Coord {
+        return Coord(x + other.x, y + other.y)
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
