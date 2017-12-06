@@ -6,17 +6,21 @@ fun main(args: Array<String>) {
     println("Part 1")
     println("------")
 
-    val lines = File("input/day4/day4-part1-input").readLines()
-
     println(
-            lines
-                    .filter({ passphrase -> isValidPassphrase(passphrase) })
+            File("input/day4/day4-part1-input")
+                    .readLines()
+                    .filter({ passphrase -> isValidPassphrasePart1(passphrase) })
                     .count()
     )
 
-//    println()
-//    println("Part 2")
-//    println("------")
-//
-//    println(firstValueLargerThanSumOfAdjecentSquares(347991))
+    println()
+    println("Part 2")
+    println("------")
+
+    println(
+            File("input/day4/day4-part2-input")
+                    .readLines()
+                    .filter({ passphrase -> isValidPassphrasePart2(passphrase) })
+                    .count()
+    )
 }
