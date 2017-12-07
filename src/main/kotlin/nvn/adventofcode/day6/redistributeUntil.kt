@@ -11,10 +11,13 @@ fun redistributeUntilSeenBefore(initialMemoryBank: List<Int>): RedistributeUntil
     })
 }
 
-fun redistributeUntil(initialMemoryBank: List<Int>, shouldRedistribute: (List<Int>) -> Boolean): RedistributeUntilResult {
-    var count = 0
+fun redistributeUntilLoop(initialMemoryBank: List<Int>): RedistributeUntilResult =
+        redistributeUntil(initialMemoryBank, { it != initialMemoryBank })
 
-    var memoryBank = initialMemoryBank
+fun redistributeUntil(initialMemoryBank: List<Int>, shouldRedistribute: (List<Int>) -> Boolean): RedistributeUntilResult {
+    var count = 1
+
+    var memoryBank = redistributeHighest(initialMemoryBank)
     while(shouldRedistribute(memoryBank)) {
         memoryBank = redistributeHighest(memoryBank)
         count++
