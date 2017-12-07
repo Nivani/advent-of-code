@@ -8,6 +8,6 @@ class CountRedistributeUntilSeenBeforeTest {
     fun testExample() {
         val start = listOf(0, 2, 7, 0)
 
-        asserter.assertEquals("Expected count to be 5", 5, countRedistributeUntilSeenBefore(start))
+        asserter.assertEquals("Expected count to be 5", 5, redistributeUntilSeenBefore(start).count)
     }
 }

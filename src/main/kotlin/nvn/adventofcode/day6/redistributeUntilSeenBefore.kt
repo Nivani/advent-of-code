@@ -1,15 +1,26 @@
 package nvn.adventofcode.day6
 
-fun countRedistributeUntilSeenBefore(initialMemoryBank: List<Int>): Int {
+fun redistributeUntilSeenBefore(initialMemoryBank: List<Int>): RedistributeUntilResult {
+    val seenBefore = HashSet<List<Int>>()
+    return redistributeUntil(initialMemoryBank, { memoryBank ->
+        if (!seenBefore.contains(memoryBank)) {
+            seenBefore.add(memoryBank)
+            true
+        } else
+            false
+    })
+}
+
+fun redistributeUntil(initialMemoryBank: List<Int>, shouldRedistribute: (List<Int>) -> Boolean): RedistributeUntilResult {
     var count = 0
-    var seenBefore = HashSet<List<Int>>()
 
     var memoryBank = initialMemoryBank
-    while(!seenBefore.contains(memoryBank)) {
-        seenBefore.add(memoryBank)
+    while(shouldRedistribute(memoryBank)) {
         memoryBank = redistributeHighest(memoryBank)
         count++
     }
 
-    return count
+    return RedistributeUntilResult(memoryBank, count)
 }
+
+data class RedistributeUntilResult(val memoryBank: List<Int>, val count: Int)
