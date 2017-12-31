@@ -12,6 +12,12 @@ fun main(args: Array<String>) {
             .map({ parseLine(it) })
             .filter({ it.isPresent })
             .map({ it.get() })
-    val rootNode = createTree(lines)
-    println(rootNode.name)
+    val tower = createTree(lines)
+
+    println(tower.name)
+
+    println("Part 2")
+    println("------")
+
+    println(findWeightMismatch(tower).get())
 }

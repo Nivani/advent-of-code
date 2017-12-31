@@ -4,7 +4,7 @@ import java.util.*
 
 data class InputLine(
         val name: String,
-        val number: Int,
+        val weight: Int,
         val supports: List<String>
 )
 
@@ -21,9 +21,9 @@ fun parseLine(line: String): Optional<InputLine> {
         }
         Optional.of(
                 InputLine(
-                        groupValues[1],
-                        groupValues[2].toInt(),
-                        supports
+                        name = groupValues[1],
+                        weight = groupValues[2].toInt(),
+                        supports = supports
                 )
         )
     } else {
