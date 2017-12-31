@@ -16,4 +16,10 @@ fun main(args: Array<String>) {
     val registry = applyInstructions(instructions)
 
     println(findGreatestValue(registry))
+
+    println()
+    println("Part 2")
+    println("------")
+
+    println(findGreatestValueEver(registry))
 }
