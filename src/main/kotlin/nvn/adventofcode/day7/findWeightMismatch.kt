@@ -9,28 +9,34 @@ fun findWeightMismatch(tower: ProgramNode): Optional<Int> {
 
 private fun findWeightMismatchRecursive(tower: ProgramNode): IntermediateResult {
     return if (tower.supports.isEmpty()) {
-        return IntermediateResult(Optional.empty(), tower.weight, tower)
+        IntermediateResult(Optional.empty(), tower.weight, tower)
     } else {
         val supportingTowerResults = tower.supports.map({ findWeightMismatchRecursive(it) })
         val intermediateResult = Optional.ofNullable(supportingTowerResults.find({ it.result.isPresent }))
         val totalWeight = tower.weight + supportingTowerResults.map({ it.totalWeight }).sum()
+
         if (intermediateResult.isPresent) {
             IntermediateResult(intermediateResult.get().result, totalWeight, tower)
         } else {
-            var otherResult = Optional.empty<IntermediateResult>()
-
-            supportingTowerResults.subList(1, supportingTowerResults.size).forEach({ result ->
-                if (!otherResult.isPresent && result.totalWeight != supportingTowerResults[0].totalWeight) {
-                    otherResult = Optional.of(result)
-                }
-            })
-
-            if (otherResult.isPresent) {
-                IntermediateResult(Optional.of(supportingTowerResults[0].tower.weight - Math.abs(supportingTowerResults[0].totalWeight - otherResult.get().totalWeight)), totalWeight, tower)
-            } else {
-                IntermediateResult(Optional.empty(), totalWeight, tower)
-            }
+            findWeightMismatchInCurrentTower(tower, supportingTowerResults, totalWeight)
         }
+    }
+}
+
+private fun findWeightMismatchInCurrentTower(tower: ProgramNode, supportingTowerResults: List<IntermediateResult>, totalWeight: Int): IntermediateResult {
+    val firstResult = supportingTowerResults[0]
+    val otherResult = Optional.ofNullable(
+            supportingTowerResults
+                    .subList(1, supportingTowerResults.size)
+                    .find({ it.totalWeight != firstResult.totalWeight })
+    )
+
+    return if (otherResult.isPresent) {
+        val totalWeightDifference = Math.abs(firstResult.totalWeight - otherResult.get().totalWeight)
+        val correctedWeight = firstResult.tower.weight - totalWeightDifference
+        IntermediateResult(Optional.of(correctedWeight), totalWeight, tower)
+    } else {
+        IntermediateResult(Optional.empty(), totalWeight, tower)
     }
 }
 

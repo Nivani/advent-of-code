@@ -16,6 +16,7 @@ fun main(args: Array<String>) {
 
     println(tower.name)
 
+    println()
     println("Part 2")
     println("------")
 
