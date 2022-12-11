@@ -1,15 +1,27 @@
 export function findElfWithMostCalories(input) {
-	const elves = parseElves(input);
+	return findElvesWithMostCalories(input, 1)[0];
+}
 
-	let elfWithMostCalories = elves[0];
-	for (let i=1; i < elves.length; i++) {
-		const elf = elves[i];
-		if (elf.totalCalories > elfWithMostCalories.totalCalories) {
-			elfWithMostCalories = elf;
-		}
-	}
+export function totalCaloriesOfTopElves(input, numberOfElves) {
+	const elvesWithMostCalories = findElvesWithMostCalories(input, numberOfElves);
+	return elvesWithMostCalories.reduce(
+		(sum, elf) => sum + elf.totalCalories,
+		0,
+	);
+}
 
-	return elfWithMostCalories;
+function findElvesWithMostCalories(input, number) {
+	return parseElves(input)
+		.sort((elf1, elf2) => {
+			if (elf1.totalCalories < elf2.totalCalories) {
+				return -1;
+			} else if (elf1.totalCalories === elf2.totalCalories) {
+				return 0;
+			} else {
+				return 1;
+			}
+		})
+		.slice(parseElves(input).length - number, parseElves(input).length);
 }
 
 function parseElves(input) {
